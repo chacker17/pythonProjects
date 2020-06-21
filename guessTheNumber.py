@@ -4,6 +4,7 @@
 # Written 6.20.2020 by CMH
 
 import random
+import matplotlib.pyplot as plt
 
 def checkNumber(userInput):
     err = 1
@@ -24,8 +25,12 @@ while play == 1:
 
     val = random.randint(1, maxVal)
 
+    allGuessed = []
+    numGuesses = 1
+    trialNums = [1]
     guess = input("Please enter your guess: ")
     guess = checkNumber(guess)
+    allGuessed.append(guess)
 
     while guess != val:
         if guess > val:
@@ -36,10 +41,24 @@ while play == 1:
         guess = input("Please enter your guess: ")
         guess = checkNumber(guess)
 
+        allGuessed.append(guess)
+        numGuesses += 1
+        trialNums.append(numGuesses)
+
         if guess == input:
             break
 
     print("Congrats! You guessed the number correctly!")
+
+    plt.figure(figsize=[10, 6])
+    plt.plot(trialNums, allGuessed, color='#0504aa')
+    plt.xlim(0, numGuesses + 1)
+    plt.xlabel('Guess Number', fontsize=15)
+    plt.ylabel('Number Guessed', fontsize=15)
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
+    plt.title('Numbers guessed in this session', fontsize=15)
+    plt.show()
 
     # See if the user wants to play again
     play = input("Would you like to play again? 1 for yes, 0 to quit: ")
@@ -57,3 +76,5 @@ while play == 1:
         break
 
 print("Thank you for playing!")
+
+# Add graph of guesses
